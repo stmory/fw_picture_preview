@@ -1,9 +1,10 @@
 {
   "name": "fw_picture_preview",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "A Vue.js project",
+  "main": "dist/fw-picture-preview.min.js",
   "author": "wangzhen@yxholding.com <wangzhen@yxholding.com>",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
