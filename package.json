@@ -1,6 +1,6 @@
 {
   "name": "fw_picture_preview",
-  "version": "1.0.4",
+  "version": "1.0.12",
   "description": "A Vue.js project",
   "main": "dist/fw-picture-preview.min.js",
   "author": "wangzhen@yxholding.com <wangzhen@yxholding.com>",

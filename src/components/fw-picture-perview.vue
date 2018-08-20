@@ -1,10 +1,10 @@
 <template>
   <div class="fw-picture-perview-main" v-if="show">
     <div class="fw-picture-perview-pic">
-      <img ref="img" :src="picList[now].src" />
+      <img ref="img" :src="picList[now].file_path" />
     </div>
     <div class="fw-picture-perview-close" @click="close">
-      <svg t="1533009304516" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5830" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32"><path fill="#333" d="M563.8 512l262.5-312.9c4.4-5.2 0.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9c-4.4 5.2-0.7 13.1 6.1 13.1h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z" p-id="5831"></path></svg>
+      <svg t="1533009304516" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5830" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32"><path fill="#ffffff" d="M563.8 512l262.5-312.9c4.4-5.2 0.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9c-4.4 5.2-0.7 13.1 6.1 13.1h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z" p-id="5831"></path></svg>
     </div>
     <div class="fw-picture-perview-bottom">
       <fwTool @spin="spin" @zoomInOut="zoomInOut" @go="go"></fwTool>
@@ -19,13 +19,12 @@ export default {
   data() {
     return {
       deg: 0,
-      zoom: 1,
-      show: false,
-      now: this.nowPic
+      zoom: 1
     }
   },
   props: {
-    nowPic: 0,
+    show: false,
+    now: 0,
     picList: {
       type: Array,
       default: () => []
@@ -59,9 +58,10 @@ export default {
     close() {
       this.deg = 0
       this.zoom = 1
-      this.show = false
+      this.$emit('update:show', false)
     },
     go(n) {
+      let num = this.now
       if (this.now === this.picList.length - 1 && n > 0) {
         return
       }
@@ -70,9 +70,10 @@ export default {
       }
       this.deg = 0
       this.zoom = 1
-      this.$refs.img.style.width = ``
+      this.$refs.img.style.width = ''
       this.$refs.img.style.transform = ''
-      this.now += n
+      num += n
+      this.$emit('update:now', num)
     }
   }
 }
@@ -80,12 +81,13 @@ export default {
 
 <style scoped>
 .fw-picture-perview-main{
-  position: absolute;
+  position: fixed;
   top:0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(80, 80, 80, 0.5);
+  z-index: 99;
+  background-color: rgba(80, 80, 80, 0.8);
 }
 .fw-picture-perview-bottom{
   position: absolute;
